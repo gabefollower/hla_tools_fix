@@ -1,0 +1,9 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "blur.vfx"
+
+	F_GAUSSIAN_KERNEL "3"
+	F_SRGB_READ "0"
+}

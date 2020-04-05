@@ -1,0 +1,9 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "vr_warp.vfx"
+
+	//---- Color ----
+	TextureMura "materials/dev/vr_warp_e10734_n12_mura.png"
+}
