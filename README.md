@@ -1,7 +1,7 @@
 ###### English
 ## Features
 1. Hammer with custom FGD files ***(created and organized by: [gvarados1](https://github.com/gvarados1/Half-Life-Alyx-FGD))***
-2. Source 2 Film Maker**
+2. Source 2 Film Maker
 3. Prerelease assets references for datamining
 
 ## Installation
@@ -13,7 +13,7 @@
 
 ###### Russian
 ## Особенности
-1. Хаммер с касмтомными FGD файлами ***(созданы и организованы: [gvarados1](https://github.com/gvarados1/Half-Life-Alyx-FGD))***
+1. Хаммер с кастомными FGD файлами ***(созданы и организованы: [gvarados1](https://github.com/gvarados1/Half-Life-Alyx-FGD))***
 2. Сорс 2 фильм мейкер
 3. Предрелизные референсы в ассетах для изучения
 
