@@ -1,4 +1,4 @@
-###### English :uk:
+###### English
 ## Features
 **1. Hammer with custom FGD files (***created and organized by: [gvarados1](https://github.com/gvarados1/Half-Life-Alyx-FGD)***)**
    
@@ -13,15 +13,12 @@
 
 # DO NOT OVERRIDE YOUR ORIGINAL HLA FILES
 
-###### Russian :ru:
+###### Russian
 ## Особенности
-**1. Хаммер с касмтомными FGD файлами (***созданы и организованы: [gvarados1](https://github.com/gvarados1/Half-Life-Alyx-FGD)***)  **
-   
+**1. Хаммер с касмтомными FGD файлами (***созданы и организованы: [gvarados1](https://github.com/gvarados1/Half-Life-Alyx-FGD)***)**
+
 **2. Сорс 2 фильм мейкер**
-   - Шпионская граната `give weapon_spygrenade`
-   - Оглушающая дубинка `give weapon_charger_melee`
-   - Тяжелый пулемет `give weapon_heavymg`
-   
+
 **3. Предрелизные референсы в ассетах для изучения**
 
 ## Установка
