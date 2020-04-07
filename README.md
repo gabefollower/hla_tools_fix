@@ -12,9 +12,9 @@
 
 ## Hammer usage
 1. Save **all** maps in `..\hla\content\hammer_fix\maps`
-2. **After compiling** go to `..\hla\game\hammer_fix\maps` and сopy ***`"your_map_name"`***`.vpk"`
+2. **After compiling** go to `..\hla\game\hammer_fix\maps` and сopy ***`"your_map_name"`***`.vpk`
 3. Paste it in **stable** HLA map folder `..\hla\game\hlvr\maps`
-4. Launch **stable** HLA build with `-console -vconsole` launch options and type `map`***`"your_map_name"`***`.vpk"` in console.
+4. Launch **stable** HLA build with `-console -vconsole` launch options and type `map`***`"your_map_name"`***`.vpk` in console.
 
 # DO NOT OVERRIDE YOUR ORIGINAL HLA FILES
 
@@ -32,8 +32,8 @@
 
 ## Использование хаммера
 1. Сохраняйте **все** ваши карты в `..\hla\content\hammer_fix\maps`
-2. **После компиляции** карты перейдите в `..\hla\game\hammer_fix\maps` и скопируйте ***`"название_вашей_карты"`***`.vpk"`
+2. **После компиляции** карты перейдите в `..\hla\game\hammer_fix\maps` и скопируйте ***`"название_вашей_карты"`***`.vpk`
 3. Вставьте её в папку с картами вашего **стабильного** билда HLA `..\hla\game\hlvr\maps`
-4. Запустите **стабильный** билд HLA с параметрами запуска `-console -vconsole` и напишите `map`***`"название_вашей_карты"`***`.vpk"` в консоли.
+4. Запустите **стабильный** билд HLA с параметрами запуска `-console -vconsole` и напишите `map`***`"название_вашей_карты"`***`.vpk` в консоли.
 
 # УСТАНАВЛИВАЙТЕ ФИКС ТОЛЬКО НА КОПИЮ
