@@ -1,6 +1,6 @@
 "GameInfo"
 {
-	game 		"Half-Life: Alyx"
+	game 		"hammer_fix"
 	title 		"Half-Life: Alyx"
 	type		singleplayer_only
 	nomodels 1
@@ -28,10 +28,7 @@
 		SearchPaths
 		{
 			Game				hammer_fix
-			Game				hlvr
-			Game				core
-			Mod					hlvr
-			Write				hlvr
+			Mod					hammer_fix
 		}
 	}
 	
@@ -183,7 +180,7 @@
 	
 	AssetSystem
 	{
-		"disable_readonly_assets"	"0"
+		"disable_readonly_assets"	"1"
 	}
 
 	RenderPipelineAliases
