@@ -145,6 +145,7 @@
 	{
 		"Engine"	"Source 2"
 		"ToolsDir"	"../sdktools"	// NOTE: Default Tools path. This is relative to the mod path.
+		"ShowCoreMod"	"1"					
 	}
 	
 	Hammer
@@ -155,7 +156,7 @@
 		"DefaultSolidEntity"			"trigger_multiple"
 		"DefaultPointEntity"			"info_player_start"
 		"DefaultPathEntity"				"path_particle_rope"
-		"NavMarkupEntity"				"func_hlvr_nav_markup"
+		"NavMarkupEntity"				"func_nav_markup"
 		"OverlayBoxSize"				"8"
 		"UsesBakedLighting"				"1"
 		"TileMeshesEnabled"				"1"

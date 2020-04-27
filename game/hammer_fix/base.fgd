@@ -990,6 +990,19 @@
 		1 : "Teleport"
 		2 : "Teleport (w/non-up floor)"
 	]
+	
+	max_lightmap_resolution(choices) : "Maximum Lightmap Resolution" : 0 : "Clamps the maximum lightmap resolution in this map to this value. Set this to prevent Lightmap Resolution Bias from going over this resolution." = 
+	[
+		0 : "No Limit"
+		512 : "512"
+		1024 : "1024"
+		2048 : "2048"
+		4096 : "4096"
+		8192 : "8192"
+		16384 : "16384"
+	]
+
+	startcolor(color255) : "Starting color" : "0, 0, 0" : "If the map is set to fade in, this determines the color it starts off as."
 ]
 
 
@@ -4931,7 +4944,7 @@
 	output OnEntitiesSpawned(void) : "Fired when the entities associated with the layer have been spawned."
 ]
 
-@PointClass base( Targetname ) tags( Logic ) 
+@PointClass base( Targetname, Parentname ) tags( Logic ) 
 	selected_line( 255 255 255, targetname, Template01 )
 	selected_line( 255 255 255, targetname, Template02 )
 	selected_line( 255 255 255, targetname, Template03 )
@@ -5455,6 +5468,41 @@
 
 	// Outputs
 	output OnConstraintBroken(void) : "Fired when a player breaks through the constraint."
+]
+
+@PointClass base(Targetname, Parentname, EnableDisable) editormodel("models/editor/axis_helper.vmdl") sphere(grab_radius) = point_grabbable :
+	"Specifies a point in space that can be grabbed by the player and moved around."
+[
+
+	grab_radius(float) : "Radius" : 4 : "Radius of the sphere or circle shape."
+	limit_mins(vector) : "Limit mins" : "-8 -8 -8" : "Min X, Y, Z values for cube shape."
+	limit_maxs(vector) : "Limit maxs" : "8 8 8" : "Max X, Y, Z values for cube shape."
+	
+	shape(choices) : "Shape" : 1 : "The shape on which the grabbable point will be constrained to." = [
+		0: "Cube"
+		1: "Sphere"
+		2: "Circle"
+	]
+	
+	sphere_center(vector) : "Sphere center" : "0 0 0"
+	constrain_angle(float) : "Constrain angle" : 20 : "Biggest angle allowed to move."
+	detach_angle(float) : "Detach angle" : 35 : "Angle at which the player stops grabbing."
+	thickness(float) : "Thickness" : 16
+	handpose_entity_name(target_destination) : "Handpose entity" : : "Handpose associated with the grab."
+
+	// Outputs
+	output OnGrabbed(void) : "Fired when the player starts grabbing."
+	output OnDropped(void) : "Fired when the player stops grabbing."
+]
+
+@PointClass base(Targetname) editormodel("models/editor/arrow.vmdl") = point_aimat : 
+	"Helper entity that orientates itself so that it faces towards a specific target. " +
+	"Useful for orientating entities. Simply parent the desired entity to this entity."
+[
+	aim_target(target_destination) : "Aim target" : : "The entity to orient towards."
+	aim_offset(vector) : "Aim offset" : "12 0 0" :  
+	max_angular_velocity(float) : "Max angular velocity" : -1 : "-1 means no limit."
+	yaw_only(boolean) : "Yaw only" : 0 : "Only allow rotation along the yaw axis."
 ]
 
 //-------------------------------------------------------------------------
@@ -6360,12 +6408,34 @@
 	]
 
 	SilentToZombies(boolean) : "Silent To Zombies" : 0 : "Should this prop generate sounds that blind zombies can hear."
+	CanDepositInItemHolder(boolean) : "Wrist Pocketable" : 0 : "If set, prop can be stored in wrist pocket."
+	AddToSpatialPartition(boolean) : "Add To Spatial Partition" : 0 : "Makes this prop interact in its own partition, prevents collision errors when colliding with other props."
+	forcenpcexclude(boolean) : "Force NPC Exclude" : 0
+	mute_impact_effects(boolean) : "Mute Impact Effects" : 0 : "Mutes collision sounds."
+	forceteleportacknowledge(boolean) : "Force Teleport Acknowledge" : 0
+	
+	carrytype_override(choices) : "Carry Type Override" : "CARRY_TYPE_INVALID" =
+	[
+		"CARRY_TYPE_INVALID" : "No Override"
+		"CARRY_TYPE_1H_SOFT" : "1H Soft - Normal, can be two handed"
+		"CARRY_TYPE_1H_CONSTRAINED" : "1H Constrained - Makes the wrist go completely limp"
+		"CARRY_TYPE_1H_RIGID" : "1H Rigid - Exactly follows the hand"
+		"CARRY_TYPE_1H_2H_DETACHABLE" : "1H 2H Detachable - No 1H, detaches when hitting a wall"
+		"CARRY_TYPE_1H_2H_RIGID" : "1H 2H Rigid - Exactly follows the first hand, second hand follows the prop at the grab point"
+		"CARRY_TYPE_2H_DRAG" : "2H Drag - No 1H, can only drag around"
+		"CARRY_TYPE_2H_DRAG_PLANAR" : "2H Drag - No 1H, acts weirdly"
+		"CARRY_TYPE_2H_PICKUP" : "2H Pickup - No 1H, can be lifted and dragged"
+		"CARRY_TYPE_TOO_HEAVY" : "Too Heavy - No pickup allowed"
+	]
 
 	// Inputs
 	input Ignite(void) : "Ignite, burst into flames."
 	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
 	input IgniteNumHitboxFires(integer) : "Ignite, with a parameternumber of hitbox fires."
 	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
+	
+	// Outputs
+	output OnGlovePulled(void) : "Called when the prop is pulled by the gloves."
 ]
 
 @PointClass base(prop_physics) model() sphere(fademindist) sphere(fademaxdist) = prop_physics_multiplayer :
@@ -7177,6 +7247,28 @@
 	input SetOff(void) : "Turn the camera off."
 ]
 
+@PointClass base(Targetname, Parentname, EnableDisable) = func_monitor : 
+	"Treats the brush as a monitor as displays the targeted camera."
+[
+	target(target_destination) : "Camera" : : "The point_camera entity to display from."
+	
+	resolution(choices) : "Resolution" : 0 = [
+		0 : "Default"
+		1 : "Increase up by 2"
+		2 : "Increase up by 4"
+		3 : "Increase up by 8"
+		4 : "Increase up by 16"
+	]
+	
+	render_shadows(boolean) : "Render shadows" : 0
+	unique_target(boolean) : "Use unique color" : 1
+	draw_3dskybox(boolean) : "Draw 3D skybox" : 1
+
+	// Input
+	input SetCamera(target_destination) : "Set the new camera to display from."
+
+]
+
 //-------------------------------------------------------------------------
 // Used to allow entities to use point_cameras for their materials
 //-------------------------------------------------------------------------
@@ -7286,39 +7378,6 @@
 [
 	cameraname(string) : "Camera Name" : "" : "Used as the name of the directory to store screenshots from this camera. Must be unique within the level."
 	FOV(integer) : "Camera FOV" : 75 : "FOV of this camera."
-]
-
-
-@PointClass base(Targetname, DamageFilter) tags( Logic ) size(-8 -8 -8, 8 8 8) = logic_playerproxy :
-	"An entity that is used to relay inputs/ouputs to the player and back to the world."
-[
-	output OnStartSlowingTime(void)			: "Fired when a Portal player initiates slow time."
-	output OnStopSlowingTime(void)			: "Fired when a Portal player stops slowing time."
-
-	// Outputs
-	output OnFlashlightOn(float) 			: "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
-	output OnFlashlightOff(float) 			: "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
-	input RequestPlayerHealth(void) 		: "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."
-	output PlayerHealth(integer)			: "The player's current health value."
-	output PlayerMissedAR2AltFire(void)		: "Player fired an AR2 combine ball that didn't kill any enemies."
-
-	input SetFlashlightSlowDrain(void)		: "Puts the player's flashlight in slow-power-drain mode (for Episodic darkness)"
-	input SetFlashlightNormalDrain(void)		: "Puts the player's flashlight to default power drain"
-
-	input SetPlayerHealth(integer)			: "Sets the player's health to this value."
-	
-	input RequestAmmoState(void)			: "Request the ammo state of the player. It will fire PlayerHasAmmo or PlayerHasNoAmmo outputs."
-	output PlayerHasAmmo(void) 				: "Fired by request if the player has any ammo."
-	output PlayerHasNoAmmo(void) 			: "Fired by request if the player doesn't have any ammo."
-	
-	output PlayerDied(void) 				: "Fires when the player dies."
-
-	input LowerWeapon(void)					: "Lowers the players weapon."
-	
-	input EnableCappedPhysicsDamage(void) :	 "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
-	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
-	input SetLocatorTargetEntity(string) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
-	
 ]
 
 
